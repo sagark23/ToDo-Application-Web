@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoDataService } from '../service/data/todo-data.service';
 import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
+import { Router } from '@angular/router';
 
 export class Todo {
   constructor(
@@ -25,7 +26,8 @@ export class ListTodosComponent implements OnInit {
   message: string;
 
   constructor(private todoDataService: TodoDataService,
-    private authenticationService: HardcodedAuthenticationService) { }
+    private authenticationService: HardcodedAuthenticationService,
+    private router: Router) { }
 
   ngOnInit() {
     this.username = this.authenticationService.getLoggedInUser();
@@ -33,7 +35,7 @@ export class ListTodosComponent implements OnInit {
   }
 
   getTodos(username) {
-    this.todoDataService.getTodos(username).subscribe(response => this.getSuccessfullResponse(response));
+    this.todoDataService.getAllTodos(username).subscribe(response => this.getSuccessfullResponse(response));
   }
 
   deleteTodo(id) {
@@ -43,6 +45,14 @@ export class ListTodosComponent implements OnInit {
         this.getTodos(this.username);
       }
     );
+  }
+
+  updateTodo(id) {
+    this.router.navigate(['todos', id])
+  }
+
+  createTodo(){
+    this.router.navigate(['todos', 0]);
   }
 
   getSuccessfullResponse(response): void {

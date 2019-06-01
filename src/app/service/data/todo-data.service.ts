@@ -9,8 +9,20 @@ export class TodoDataService {
 
   constructor(private http: HttpClient) { }
 
-  getTodos(username){
+  getAllTodos(username) {
     return this.http.get<Todo[]>(`http://localhost:8080/users/${username}/todos`);
+  }
+
+  getTodo(username: any, id: any) {
+    return this.http.get<Todo>(`http://localhost:8080/users/${username}/todos/${id}`);
+  }
+
+  updateTodo(username: any, todo: Todo) {
+    if (todo.id && todo.id > 0) {
+      return this.http.put(`http://localhost:8080/users/${username}/todos/${todo.id}`, todo);
+    } else {
+      return this.http.post(`http://localhost:8080/users/${username}/todos`, todo);
+    }
   }
 
   deleteTodo(username, id: any) {

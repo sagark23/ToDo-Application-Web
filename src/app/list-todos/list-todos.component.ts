@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoDataService } from '../service/data/todo-data.service';
+import { HardcodedAuthenticationService } from '../service/hardcoded-authentication.service';
 
-export class Todo{
+export class Todo {
   constructor(
-    public id : Number,
-    public description : String,
-    public isDone : Boolean,
-    public targetDate : Date
-  ){
+    public id: Number,
+    public description: String,
+    public isDone: Boolean,
+    public targetDate: Date
+  ) {
 
   }
 }
@@ -18,15 +20,33 @@ export class Todo{
 })
 export class ListTodosComponent implements OnInit {
 
-  todos = [
-    new Todo(1, 'Learn to dance', false, new Date()),
-    new Todo(2, 'Become an expert in Angular', false, new Date()),
-    new Todo(3, 'Visit India', false, new Date())
-  ]
- 
-  constructor() { }
+  todos = []
+  username: any;
+  message: string;
+
+  constructor(private todoDataService: TodoDataService,
+    private authenticationService: HardcodedAuthenticationService) { }
 
   ngOnInit() {
+    this.username = this.authenticationService.getLoggedInUser();
+    this.getTodos(this.username);
   }
 
+  getTodos(username) {
+    this.todoDataService.getTodos(username).subscribe(response => this.getSuccessfullResponse(response));
+  }
+
+  deleteTodo(id) {
+    this.todoDataService.deleteTodo(this.username, id).subscribe(
+      response => {
+        this.message = `Delete of Todo ${id} successful`;
+        this.getTodos(this.username);
+      }
+    );
+  }
+
+  getSuccessfullResponse(response): void {
+    console.log(response);
+    this.todos = response;
+  }
 }

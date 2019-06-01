@@ -23,4 +23,8 @@ export class HardcodedAuthenticationService {
   logout(){
     sessionStorage.removeItem('authenticatedUser');
   }
+
+  getLoggedInUser() : String{
+    return sessionStorage.getItem('authenticatedUser');
+  }
 }

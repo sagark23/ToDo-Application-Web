@@ -2,3 +2,10 @@
 <div class="container">
   {{welcomeMessage}}, you can manage your Todo's <a routerLink="/todos">here</a>
 </div>
+<div class="container">
+  Click to get custom welcome message.
+  <button (click)="getWelcomeMessage()" class="btn">Get Message </button>
+</div>
+<div class="container" *ngIf="messageFromServer">
+  <h2>{{messageFromServer}}</h2>
+</div>

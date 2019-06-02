@@ -1,5 +1,5 @@
 <h1>Todo</h1>
-<div class="alert alert-success" *ngIf="message">{{message}}</div>
+<div class="alert alert-warning" *ngIf="todoForm.dirty && todoForm.invalid">Enter valid values</div>
 <form (ngSubmit)="!todoForm.invalid && saveTodo()" #todoForm="ngForm">
   <div class="container">
     <fieldset class="form-group">

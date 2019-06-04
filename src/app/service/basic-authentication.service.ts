@@ -51,11 +51,11 @@ export class BasicAuthenticationService {
 
   }
 
-  getAuthenticatedUser(): String {
+  getAuthenticatedUser(): string {
     return sessionStorage.getItem('authenticatedUser');
   }
 
-  getAuthenticatedToken(): String {
+  getAuthenticatedToken(): string {
     if (this.getAuthenticatedUser())
       return sessionStorage.getItem('token');
   }
